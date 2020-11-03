@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "electron": "5.0.6",
+    "express": "4.17.1",
+    "nodemon": "^2.0.6",
+    "socket.io": "2.2.0"
+  },
+  "name": "WebSockets-To-Do-list",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:lukas1474/WebSockets-To-Do-list.git",
+  "author": "Lukasz Sobel <lukasz.sobel@hotmail.com>",
+  "license": "MIT"
+}
