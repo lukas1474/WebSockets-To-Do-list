@@ -8,12 +8,16 @@ let tasks = [];
 
 app.use(express.static(path.join(__dirname, '/client')));
 
-app.get('/', (req, res) => {
-  res.show('index.html');
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/index.html'));
 });
 
 const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running...');
+});
+
+app.use((req, res) => {
+  res.status(404).send({ message: 'Not found...' });
 });
 
 const io =socket(server);
@@ -22,23 +26,21 @@ io.on('connection', (socket) => {
   console.log('New connection! Its id - ' +socket.id);
   console.log(tasks);
 
-  socket.on('updateData', () => {
-    socket.emit('updateData', task);
-  });
+  socket.emit('updateData', tasks);
 
-  socket.on('addTast', (task) => {
+
+  socket.on('addTask', (task) => {
     tasks.push(task);
-    socket.broadcast.emit('addTask', (task));
+    socket.broadcast.emit('addTask', task);
   });
 
   socket.on('removeTask', (taskIndex) => {
-    const removeTask = task.filter((task) => task.id === taskIndex)[0];
-    task.splice(tasks.indexOf(removeTask), 1);
-    socket.broadcast.emit('removeTask', 'taskIndex');
+    const removedTask = tasks.filter((task) => task.id === taskIndex)[0];
+    tasks.splice(tasks.indexOf(removedTask), 1);
+    
+    socket.broadcast.emit('removeTask', taskIndex);
     console.log(tasks);
   });
 });
 
-app.use((req, res) => {
-  res.status(404).send({ message: 'Not found...' });
-});
+
