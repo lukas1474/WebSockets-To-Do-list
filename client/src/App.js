@@ -13,13 +13,13 @@ class App extends React.Component {
 
   componentDidMount() {
     this.socket = io('localhost:8000');
-    this.socket.on('updateData', (task) => this.updateTasks(task));
-    this.socket.on('addTask', (tasks) => this.addTask(tasks));
+    this.socket.on('updateData', (tasks) => this.updateTasks(tasks));
+    this.socket.on('addTask', (task) => this.addTask(task));
     this.socket.on('removeTask', (id) => this.removeTask(id));
   };
 
-  handleInputChange(element) {
-    this.setState({ taskName: element });
+  handleInputChange(taskName) {
+    this.setState({ taskName });
   }
 
   addTask(task) {
@@ -38,8 +38,8 @@ class App extends React.Component {
     });
   }
 
-  updateTasks(task) {
-    this.setState({ tasks: task });
+  updateTasks(tasks) {
+    this.setState({ tasks });
   }
 
   submitForm(event) {

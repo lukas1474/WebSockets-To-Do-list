@@ -20,7 +20,7 @@ app.use((req, res) => {
   res.status(404).send({ message: 'Not found...' });
 });
 
-const io =socket(server);
+const io = socket(server);
 
 io.on('connection', (socket) => {
   console.log('New connection! Its id - ' +socket.id);
